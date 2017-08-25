@@ -1,0 +1,22 @@
+{
+  "name": "battleship-client",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "es6-promise": "^4.1.1",
+    "formsy-material-ui": "^0.6.2",
+    "formsy-react": "^0.19.5",
+    "isomorphic-fetch": "^2.2.1",
+    "material-ui": "^0.19.0",
+    "react": "^15.6.1",
+    "react-dom": "^15.6.1",
+    "react-scripts": "1.0.11",
+    "store": "^2.0.12"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  }
+}
