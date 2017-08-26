@@ -7,7 +7,7 @@ import Toggle from 'material-ui/Toggle'
 
 import {login, signup} from '../shared/utils'
 
-export default class Login extends Component{
+export default class SignIn extends Component{
   state = {}
 
   handleOnValid = (model) => {}

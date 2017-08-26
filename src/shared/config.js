@@ -1,4 +1,4 @@
-const env = 'prod'
+const env = 'dev'
 
 const protocol = 'http'
 const domain = env == 'dev' ? 'localhost' : 'api.subvertic.com'
