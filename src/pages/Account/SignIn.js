@@ -10,7 +10,7 @@ import * as MessageActions from '../../shared/actions/MessageActions'
 
 export default class SignIn extends Component{
   handleOnValidSubmit = (model) => {
-    AccountActions.signUp(model)
+    AccountActions.signIn(model)
   }
   handleOnInvalidSubmit = () => {}
 
@@ -39,28 +39,7 @@ export default class SignIn extends Component{
           onChange={this.handleOnChange}
         />
 
-        <FormsyText
-          name="name"
-          hintText="Your name"
-          floatingLabelText="Name"
-          onChange={this.handleOnChange}
-        />
-
-        <FormsyText
-          name="last_name"
-          hintText="Your last name"
-          floatingLabelText="Last name"
-          onChange={this.handleOnChange}
-        />
-
-        <FormsyText
-          name="email"
-          hintText="Your email address"
-          floatingLabelText="Email"
-          onChange={this.handleOnChange}
-        />
-
-        <RaisedButton type="submit" label="Sign Up"/>
+        <RaisedButton type="submit" label="Sign In"/>
       </Formsy.Form>
     )
   }

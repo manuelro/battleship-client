@@ -1,8 +1,48 @@
 import store from 'store'
 import {makeEndpoint} from './config'
+import TokenStore from './stores/TokenStore'
 
 require('es6-promise').polyfill()
 require('isomorphic-fetch')
+
+export function generateRequest(params){
+  //PARAMS: method, signed, endpoint, data, cb
+
+  const method = params.method || 'GET'
+  const body = JSON.stringify(params.data) || {}
+  const cb = params.cb
+
+  const headers = {
+    'Content-Type': 'application/json'
+  }
+  if(params.signed) headers.Authorization = `JWT ${TokenStore.get()}`
+
+  const config = {
+    method,
+    headers,
+    mode: 'cors',
+    body
+  }
+
+  console.log('CONFIG:', endpoint, config)
+
+  const endpoint = makeEndpoint(params.endpoint)
+  fetch(endpoint, config)
+  .then(function(res) {
+    if (res.status >= 400) {
+      cb({ message: 'Server error', code: res.status }, null)
+      throw new Error('Bad response from server')
+    }
+
+    return res.json()
+  })
+  .then(function(data) {
+    cb(null, data)
+  })
+  .catch(function() {
+    // cb({ message: 'Server error'}, null)
+  })
+}
 
 export function getToken(){
   return store.get('token') || false
