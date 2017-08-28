@@ -3,7 +3,6 @@ import Formsy from 'formsy-react'
 import { FormsyText } from 'formsy-material-ui/lib'
 import RaisedButton from 'material-ui/RaisedButton'
 
-import * as AccountStore from '../../shared/stores/AccountStore'
 import * as AccountActions from '../../shared/actions/AccountActions'
 import * as ErrorActions from '../../shared/actions/ErrorActions'
 import * as MessageActions from '../../shared/actions/MessageActions'

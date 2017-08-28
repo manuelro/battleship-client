@@ -27,7 +27,7 @@ class AccountStore extends EventEmitter{
 
         AccountActions.storeAccount(account)
 
-        this.emit('signedOut')
+        this.emit('signedUp')
       }
     })
   }
@@ -48,9 +48,8 @@ class AccountStore extends EventEmitter{
   }
 
   signOut(){
-    this.emit('signingOut')
-
     console.log('signOut')
+    this.emit('signingOut')
   }
 
   store(account){

@@ -25,7 +25,10 @@ export default class Board extends Component{
 
     return(
       <div>
-        <h4>Board ID: {this.state.board.board_id ? this.state.board.board_id : 'loading'}</h4>
+        <code>Board ID: {this.state.board.board_id ? this.state.board.board_id : 'loading'}</code>
+        <br/>
+
+        <h5>Your board</h5>
 
         {rows}
 

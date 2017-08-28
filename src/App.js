@@ -15,21 +15,27 @@ import GamesPage from './pages/Games'
 import ErrorMessage from './components/ErrorMessage'
 import Message from './components/Message'
 
+import * as utils from './shared/utils'
+
 class App extends Component {
   state = {}
 
-  componentDidMount(){
-    this.setState({ token: TokenStore.get() })
+  constructor(){
+    super()
+    this.state.token = TokenStore.get()
   }
 
   componentWillMount(){
     TokenStore.on('removed', () => {
       this.setState({ token: null })
+      utils.clearEverything()
     })
 
     TokenStore.on('stored', () => {
       this.setState({ token: TokenStore.get() })
     })
+
+    utils.startConcurrentLoading()
   }
 
   render() {

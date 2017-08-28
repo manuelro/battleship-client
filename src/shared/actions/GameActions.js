@@ -45,3 +45,10 @@ export function fetchAllGames(){
     type: 'GAME_FETCH_ALL'
   })
 }
+
+export function fetchGameRec(gameId){
+  dispatcher.dispatch({
+    type: 'GAME_FETCH_REC',
+    gameId
+  })
+}

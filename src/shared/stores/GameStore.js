@@ -28,8 +28,47 @@ class GameStore extends EventEmitter{
     })
   }
 
-  fetchAll(){
+  fetch(gameId){
     const req = generateRequest({
+      endpoint: `game/${gameId}`,
+      method: 'GET',
+      signed: true,
+      cb: (err, game) => {
+        if(err) return ErrorActions.setError(err)
+
+        this.store(game)
+
+        this.emit('fetched')
+      }
+    })
+  }
+
+  fetchRec(gameId){
+    var timer = setTimeout(() => {
+      if(gameId){
+        const req = generateRequest({
+          endpoint: `game/${gameId}`,
+          method: 'GET',
+          signed: true,
+          cb: (err, game) => {
+            clearTimeout(timer)
+            this.fetchRec(gameId)
+
+            if(err) return ErrorActions.setError(err)
+
+            this.store(game)
+
+            this.emit('fetchedRec')
+          }
+        })
+      } else {
+        clearTimeout(timer)
+      }
+    }, 1000)
+  }
+
+  fetchAll(){
+    return generateRequest({
       endpoint: 'game',
       method: 'GET',
       signed: true,
@@ -41,6 +80,16 @@ class GameStore extends EventEmitter{
         this.emit('fetchedAll')
       }
     })
+  }
+
+  fetchAllRec(){
+    var timer = setTimeout(() => {
+      this.fetchAll().then((err, games) => {
+        clearTimeout(timer)
+        this.emit('fetchedAllRec')
+        this.fetchAllRec()
+      })
+    }, 1000)
   }
 
   list(){
@@ -74,6 +123,12 @@ class GameStore extends EventEmitter{
         break
       case 'GAME_REMOVE':
         this.remove()
+        break
+      case 'GAME_FETCH_REC':
+        this.fetchRec(action.gameId)
+        break
+      case 'GAME_FETCH_ALL_REC':
+        this.fetchRecAll()
         break
       default:
     }

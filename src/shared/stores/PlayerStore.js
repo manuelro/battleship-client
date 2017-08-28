@@ -50,10 +50,17 @@ class PlayerStore extends EventEmitter{
     return store.get(this.name)
   }
 
+  remove(){
+    return store.remove(this.name)
+  }
+
   action(action){
     switch (action.type) {
       case 'PLAYER_JOIN_GAME':
         this.join(action.gameId, action.data)
+        break
+      case 'PLAYER_REMOVE':
+        this.remove()
         break
       default:
     }

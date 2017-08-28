@@ -7,3 +7,9 @@ export function joinGame(gameId, data){
     data
   })
 }
+
+export function removePlayer(){
+  dispatcher.dispatch({
+    type: 'PLAYER_REMOVE'
+  })
+}

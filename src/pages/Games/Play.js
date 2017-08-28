@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 
 import PlayerStore from '../../shared/stores/PlayerStore'
+import GameStore from '../../shared/stores/GameStore'
 
 import Player from '../../components/Player'
 

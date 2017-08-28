@@ -2,6 +2,9 @@ import store from 'store'
 import {makeEndpoint} from './config'
 import TokenStore from './stores/TokenStore'
 
+import GameStore from './stores/GameStore'
+import PlayerStore from './stores/PlayerStore'
+
 require('es6-promise').polyfill()
 require('isomorphic-fetch')
 
@@ -27,7 +30,7 @@ export function generateRequest(params){
   console.log('CONFIG:', endpoint, config)
 
   const endpoint = makeEndpoint(params.endpoint)
-  fetch(endpoint, config)
+  const req = fetch(endpoint, config)
   .then(function(res) {
     if (res.status >= 400) {
       cb({ message: 'Server error', code: res.status }, null)
@@ -42,6 +45,17 @@ export function generateRequest(params){
   .catch(function() {
     // cb({ message: 'Server error'}, null)
   })
+
+  return req
+}
+
+export function startConcurrentLoading(){
+  GameStore.fetchAllRec()
+}
+
+export function clearEverything(){
+  GameStore.remove()
+  PlayerStore.remove()
 }
 
 export function getToken(){
