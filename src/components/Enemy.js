@@ -11,16 +11,31 @@ import RaisedButton from 'material-ui/RaisedButton'
 import FlatButton from 'material-ui/FlatButton'
 import Dialog from 'material-ui/Dialog'
 
-import Board from './Enemy/Board'
 
 import Formsy from 'formsy-react'
 import { FormsyCheckbox, FormsyToggle, FormsyText } from 'formsy-material-ui/lib'
 
-export default class Enemy extends Component{
-  state = { open: false }
+import Board from './Enemy/Board'
+import EnemyStore from '../shared/stores/EnemyStore'
+import * as EnemyActions from '../shared/actions/EnemyActions'
 
-  handleShootAttempt = () => {
-    console.log('Shooting')
+function fetchEnemyRec(){
+  const interval = setTimeout(() => {
+    EnemyStore.fetch(this.props.playerId)
+    clearTimeout(interval);
+    fetchEnemyRec.call(this);
+  }, 1000)
+}
+
+export default class Enemy extends Component{
+  state = { open: false, enemy: {} }
+
+  componentWillMount(){
+    fetchEnemyRec.call(this);
+
+    EnemyStore.on('fetched', (enemy) => {
+      if(enemy.player_id === this.props.playerId) this.setState({ enemy })
+    })
   }
 
   handleOpen = () => {
@@ -58,12 +73,14 @@ export default class Enemy extends Component{
           onRequestClose={this.handleClose}
           autoScrollBodyContent={true}
         >
-
-          <Board setCoords={this.setCoords}/>
+          <code>Board: {this.state.enemy.board_id}</code>
+          <br/>
+          <Board setCoords={this.setCoords} enemy={this.state.enemy}/>
         </Dialog>
 
         <ListItem
-          primaryText={this.props.playerId}
+          primaryText={this.state.enemy.nickname || 'loading...'}
+          secondaryText={this.state.enemy.current_fleet_value ? `Value: ${this.state.enemy.current_fleet_value} - Points: ${this.state.enemy.points_gained}` : ''}
           leftIcon={this.props.playerId == this.props.player.player_id ? <ImageAdjust color={blueGrey500}/> : <EditorInsertEmoticon color={brown800}/>}
           rightAvatar={<Avatar backgroundColor={transparent} color={deepPurple800} icon={this.props.playerId !== this.props.player.player_id ? <DeviceGpsFixed onClick={this.handleOpen} /> : null} />}
         />

@@ -9,8 +9,6 @@ export default class GameDashboard extends Component{
     const players = this.props.game ? this.props.game.players : []
     const enemies = players.map((playerId, index) => <Enemy game={this.props.game} player={this.props.player} playerId={playerId} key={`player-enemy-${index}`} />)
 
-    console.log(this.props)
-
     return(
       <div>
         <h3>The game dashboard</h3>

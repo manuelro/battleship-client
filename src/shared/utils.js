@@ -27,7 +27,7 @@ export function generateRequest(params){
     body
   }
 
-  console.log('CONFIG:', endpoint, config)
+  // console.log('CONFIG:', endpoint, config)
 
   const endpoint = makeEndpoint(params.endpoint)
   const req = fetch(endpoint, config)
