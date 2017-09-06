@@ -11,6 +11,8 @@ import RaisedButton from 'material-ui/RaisedButton'
 import FlatButton from 'material-ui/FlatButton'
 import Dialog from 'material-ui/Dialog'
 
+import Board from './Enemy/Board'
+
 import Formsy from 'formsy-react'
 import { FormsyCheckbox, FormsyToggle, FormsyText } from 'formsy-material-ui/lib'
 
@@ -22,11 +24,19 @@ export default class Enemy extends Component{
   }
 
   handleOpen = () => {
-    this.setState({open: true});
+    this.setState({open: true})
   }
 
   handleClose = () => {
-    this.setState({open: false});
+    this.setState({open: false})
+  }
+
+  setCoords = (x, y) => {
+    this.setState({ coords: { x, y } })
+  }
+
+  handleShooting = () => {
+    console.log('Shooting');
   }
 
   render(){
@@ -48,31 +58,8 @@ export default class Enemy extends Component{
           onRequestClose={this.handleClose}
           autoScrollBodyContent={true}
         >
-          <Formsy.Form
-            onValidSubmit={this.handleOnValidSubmit}
-            onInvalidSubmit={this.handleOnInvalidSubmit}
-          >
-            <FormsyText
-              name="x_coordinate"
-              required
-              hintText="X coordinate"
-              floatingLabelText="X"
-            />
 
-            <FormsyText
-              name="y_coordinate"
-              required
-              hintText="Y coordinate"
-              floatingLabelText="Y"
-            />
-
-            <FlatButton
-              label="Shoot!"
-              primary={true}
-              keyboardFocused={true}
-              type="submit"
-            />
-          </Formsy.Form>
+          <Board setCoords={this.setCoords}/>
         </Dialog>
 
         <ListItem

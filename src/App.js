@@ -17,6 +17,81 @@ import Message from './components/Message'
 
 import * as utils from './shared/utils'
 
+class Ship{
+  constructor(){
+    const sizes = [2, 4, 5, 7]
+    const alignments = ['h', 'v']
+
+    const randomSizeIndex = Math.floor(Math.random() * sizes.length)
+    const randomAlignmentIndex = Math.floor(Math.random() * alignments.length)
+
+    this.size = sizes[randomSizeIndex]
+    this.alignment = alignments[randomAlignmentIndex]
+  }
+}
+
+class EmptyRange{
+  constructor(start, end){
+    this.start = start
+    this.end = end
+    this.size = end - start
+  }
+}
+
+function getRowEmptyRanges(row){
+  const ranges = []
+
+  let currentCol
+  let start
+
+  for (var i = 0; i < row.length; i++) {
+    currentCol = row[i]
+    start = 0
+    if(!currentCol){
+      if(!start) start = currentCol
+    } else {
+      if(start){
+        ranges.push(new EmptyRange(start, currentCol))
+      } else {
+        start = currentCol
+      }
+    }
+  }
+
+  return ranges
+}
+
+console.log(getRowEmptyRanges([null, null, 1, 1, null, null]));
+
+function placeShip(matrix, ship){
+  if(ship.alignment == 'h'){
+    // The chip is horizontal
+  } else {
+    // The chip is vertical
+  }
+}
+
+function placeShips(matrix, quantity){
+  for (var i = 0; i < quantity; i++) {
+    placeShip(matrix, new Ship)
+  }
+}
+
+function generateMatrix(size){
+  const matrix = new Array()
+  for (var i = 0; i < size; i++) {
+    matrix[i] = []
+
+    for (var j = 0; j < size; j++) {
+      matrix[i][j] = 0
+    }
+  }
+
+  return matrix
+}
+
+placeShips(generateMatrix(10), 4)
+
 class App extends Component {
   state = {}
 
@@ -35,7 +110,7 @@ class App extends Component {
       this.setState({ token: TokenStore.get() })
     })
 
-    utils.startConcurrentLoading()
+    if(TokenStore.get()) utils.startConcurrentLoading()
   }
 
   render() {
